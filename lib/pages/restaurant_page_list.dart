@@ -12,7 +12,6 @@ class RestaurantListPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: Text('Recipe Restaurants'),
-        //TODO: Add functionality for current location
         actions: [IconButton(icon: Icon(Icons.location_on), onPressed: null)],
       ),
       body: StreamBuilder<BlocState>(
@@ -20,7 +19,7 @@ class RestaurantListPage extends StatelessWidget {
         initialData: bloc.currentState,
         builder: (context, snapshot) {
           if (snapshot.hasError) {
-            return _buildErrorWidget(snapshot.error);
+            return _buildErrorWidget(snapshot.error!);
           }
 
           final state = snapshot.data;
@@ -28,7 +27,7 @@ class RestaurantListPage extends StatelessWidget {
             bloc.fetchRestaurantList();
             return _buildLoadingStateWidget();
           } else if (state is Loaded) {
-            return _buildLoadedStateWidget(state.restaurantList);
+            return _buildLoadedStateWidget(state.restaurantList!);
           } else if (state is Loading) {
             return _buildLoadingStateWidget();
           } else {

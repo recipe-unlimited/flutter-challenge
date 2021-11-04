@@ -4,14 +4,12 @@ class StoreHourDetails {
   final bool available;
 
   StoreHourDetails({
-    this.open,
-    this.close,
-    this.available,
+    required this.open,
+    required this.close,
+    required this.available,
   });
 
   factory StoreHourDetails.fromMap(Map<String, dynamic> map) {
-    if (map == null) return null;
-
     return StoreHourDetails(
       open: map['open'],
       close: map['close'],

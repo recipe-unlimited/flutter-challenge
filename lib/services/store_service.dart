@@ -13,9 +13,9 @@ class StoreService {
   final Client httpClient;
   final String host;
 
-  StoreService({this.httpClient, this.host});
+  StoreService({required this.httpClient, required this.host});
 
-  Future<List<StoreModel>> fetchStoreList({Coordinates coordinates}) async {
+  Future<List<StoreModel>> fetchStoreList({Coordinates? coordinates}) async {
     var fromCoordinates = defaultFromCoordinates;
     var toCoordinates = defaultToCoordinates;
 
@@ -26,12 +26,12 @@ class StoreService {
           '${coordinates.longitude - 1.0}, ${coordinates.longitude + 1.0}';
     }
 
-    final result = await httpClient.get(host +
+    final result = await httpClient.get(Uri.parse(host +
         getStoreListPath +
-        '?from=$fromCoordinates&to=$toCoordinates&includeHours=w&lang=EN');
+        '?from=$fromCoordinates&to=$toCoordinates&includeHours=w&lang=EN'));
 
     if (result.statusCode != 200) {
-      throw result.reasonPhrase;
+      throw result.reasonPhrase ?? result.statusCode.toString();
     }
 
     final map = jsonDecode(result.body);

@@ -7,15 +7,13 @@ abstract class Bloc<T extends BlocState> {
   final _stateController = StreamController<T>.broadcast();
   Stream<T> get state => _stateController.stream;
 
-  Bloc({T initialState}) {
-    if (initialState != null) {
-      currentState = initialState;
-    }
-  }
+  Bloc({required T initialState}) : currentState = initialState;
 
   void emit(T state) {
-    currentState = state;
-    _stateController.add(state);
+    if (state != currentState) {
+      currentState = state;
+      _stateController.add(state);
+    }
   }
 
   void error(Failure error) {
@@ -31,10 +29,15 @@ abstract class Bloc<T extends BlocState> {
 abstract class BlocState {}
 
 abstract class Failure {
-  final String message;
+  final Object? error;
+  final StackTrace? stackTrace;
 
-  Failure(this.message);
+  Failure(this.error, this.stackTrace);
 
   @override
-  String toString() => 'Failure: $message';
+  String toString() {
+    debugPrint(error?.toString());
+    debugPrintStack(stackTrace: stackTrace);
+    return 'Failure: $error';
+  }
 }
