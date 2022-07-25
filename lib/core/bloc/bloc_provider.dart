@@ -5,8 +5,7 @@ class BlocProvider<T extends Bloc> extends StatefulWidget {
   final Widget child;
   final T bloc;
 
-  BlocProvider({Key? key, required this.child, required this.bloc})
-      : super(key: key);
+  const BlocProvider({Key? key, required this.child, required this.bloc}) : super(key: key);
 
   @override
   State<StatefulWidget> createState() => _BlocProviderState();

@@ -10,24 +10,24 @@ import 'package:recipe_challenge/services/store_service.dart';
 final locator = GetIt.instance;
 void main() {
   registerDependencies();
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 void registerDependencies() {
   locator.registerSingleton<Client>(Client());
-  locator.registerLazySingleton<StoreService>(
-      () => StoreService(host: uatHostUrl, httpClient: locator.get<Client>()));
-  locator.registerFactory<RestaurantListBloc>(
-      () => RestaurantListBloc(storeService: locator.get<StoreService>()));
+  locator.registerLazySingleton<StoreService>(() => StoreService(host: uatHostUrl, httpClient: locator.get<Client>()));
+  locator.registerFactory<RestaurantListBloc>(() => RestaurantListBloc(storeService: locator.get<StoreService>()));
 }
 
 class MyApp extends StatelessWidget {
+  const MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: BlocProvider(
         bloc: locator.get<RestaurantListBloc>(),
-        child: RestaurantListPage(),
+        child: const RestaurantListPage(),
       ),
     );
   }

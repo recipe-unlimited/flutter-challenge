@@ -20,15 +20,12 @@ class StoreService {
     var toCoordinates = defaultToCoordinates;
 
     if (coordinates != null) {
-      fromCoordinates =
-          '${coordinates.latitude - 1.0}, ${coordinates.latitude + 1.0}';
-      toCoordinates =
-          '${coordinates.longitude - 1.0}, ${coordinates.longitude + 1.0}';
+      fromCoordinates = '${coordinates.latitude - 1.0}, ${coordinates.latitude + 1.0}';
+      toCoordinates = '${coordinates.longitude - 1.0}, ${coordinates.longitude + 1.0}';
     }
 
-    final result = await httpClient.get(Uri.parse(host +
-        getStoreListPath +
-        '?from=$fromCoordinates&to=$toCoordinates&includeHours=w&lang=EN'));
+    final result = await httpClient
+        .get(Uri.parse('$host$getStoreListPath?from=$fromCoordinates&to=$toCoordinates&includeHours=w&lang=EN'));
 
     if (result.statusCode != 200) {
       throw result.reasonPhrase ?? result.statusCode.toString();
@@ -40,13 +37,10 @@ class StoreService {
       throw map['response']['responseHeader']['result'];
     }
 
-    if (map['response']['responseContent']['businessStatusModel']['status'] !=
-        'SUCCESS') {
-      throw map['response']['responseContent']['businessStatusModel']
-              ['status'] +
+    if (map['response']['responseContent']['businessStatusModel']['status'] != 'SUCCESS') {
+      throw map['response']['responseContent']['businessStatusModel']['status'] +
           ' : ' +
-          map['response']['responseContent']['businessStatusModel']
-              ['screenMsg'];
+          map['response']['responseContent']['businessStatusModel']['screenMsg'];
     }
 
     final storeList = map['response']['responseContent']['storeModel'] as List;

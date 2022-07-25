@@ -1,3 +1,4 @@
+import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
 import 'package:recipe_challenge/services/store_service.dart';
 import 'package:test/test.dart';
@@ -11,7 +12,7 @@ void main() {
       );
 
       final result = await storeService.fetchStoreList();
-      print(result);
+      debugPrint(result.toString());
       expect(result, isNotNull);
     });
   });

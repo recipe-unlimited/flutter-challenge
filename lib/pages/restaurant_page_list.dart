@@ -6,13 +6,17 @@ import 'package:recipe_challenge/core/bloc/bloc_provider.dart';
 import 'package:recipe_challenge/models/store_model.dart';
 
 class RestaurantListPage extends StatelessWidget {
+  const RestaurantListPage({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     final bloc = BlocProvider.of<RestaurantListBloc>(context);
     return Scaffold(
       appBar: AppBar(
-        title: Text('Recipe Restaurants'),
-        actions: [IconButton(icon: Icon(Icons.location_on), onPressed: null)],
+        title: const Text('Recipe Restaurants'),
+        actions: const [
+          IconButton(icon: Icon(Icons.location_on), onPressed: null),
+        ],
       ),
       body: StreamBuilder<BlocState>(
         stream: bloc.state,

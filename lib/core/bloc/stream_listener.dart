@@ -19,7 +19,9 @@ class StreamListener<T> extends StatefulWidget {
     this.onDone,
     this.cancelOnError,
   }) : super(key: key);
+
   @override
+  // ignore: library_private_types_in_public_api
   _StreamListenerState<T> createState() => _StreamListenerState<T>();
 }
 
@@ -37,7 +39,7 @@ class _StreamListenerState<T> extends State<StreamListener<T>> {
       cancelOnError: widget.cancelOnError,
     );
     if (widget.initialData != null) {
-      widget.onData(widget.initialData!);
+      widget.onData(widget.initialData as T);
     }
   }
 
